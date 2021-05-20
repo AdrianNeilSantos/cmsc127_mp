@@ -1,0 +1,1 @@
+web: gunicorn cmsc127_mp.wsgi
