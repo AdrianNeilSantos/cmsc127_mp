@@ -1,0 +1,68 @@
+{% extends 'crud_app/main.html' %}
+
+{% block content %}
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+{% load static%}
+<link rel="stylesheet" type="text/css" href={% static '/css/login.css' %}>
+<script src="https://kit.fontawesome.com/a81368914c.js"></script>
+
+<div class="w3-main signContainer" style="margin-left:200px">
+    <!-- Page Title + Button -->
+    <div class="w3-teal">
+      <button class="w3-button w3-teal w3-xlarge w3-hide-large" onclick="w3_open()">&#9776;</button>
+      <div class="w3-container">
+        <h1>Sign In</h1>
+      </div>
+    </div>
+    
+    <!-- Page Content -->
+    <div class="w3-container">
+        
+        {% load static%}
+        <img class="wave" src={% static '/media/wave.png' %}>
+        <div class="container">
+        <div class="img">
+            {% load static%}
+            <img src={% static '/media/bg.svg' %}>
+        </div>
+        <div class="login-content">
+            <form action="index.html">
+            {% load static%}
+            <img src={% static '/media/avatar.svg' %}>
+            <h2 class="title text">Welcome</h2>
+                    <div class="input-div one">
+                        <div class="i">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="div">
+                            <h5 class="text">Username</h5>
+                            <input type="text" class="input">
+                        </div>
+                    </div>
+                    <div class="input-div pass">
+                        <div class="i"> 
+                        <i class="fas fa-lock"></i>
+                        </div>
+                        <div class="div">
+                        <h5 class="text">Password</h5>
+                        <input type="password" class="input">
+                    </div>
+                    </div>
+                    <a class="sign text" href="#">Forgot Password?</a>
+                    <br>
+
+                    <p class="text">Don't have an account?</p>
+                    <a class="sign text" href="{% url 'signUp' %}">Sign Up</a>
+                    <input type="submit" class="btn" value="Sign In">
+                </form>
+            </div>
+        </div>
+
+        {% load static%}
+        <script type="text/javascript" src={% static '/js/login.js' %}></script>
+            </div>
+       
+</div>
+
+
+{% endblock content %}
