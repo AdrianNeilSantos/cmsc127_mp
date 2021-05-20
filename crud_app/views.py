@@ -11,3 +11,8 @@ def signIn(request):
 def signUp(request):
     return render(request, 'crud_app/pages/signUp.html')
 
+def wishlist(request):
+    return render(request, 'crud_app/pages/wishlist.html')
+
+def cart(request):
+    return render(request, 'crud_app/pages/cart.html')
