@@ -6,9 +6,15 @@ from .forms import *
 
 def home(request):
     pets = Pet.objects.all()
-
+    items = []
+    pet_count = 0
+    for pet in pets:
+        pet_count += 1
+        form = WishlistForm({"user": request.user.id, "pet": pet.id})
+        items.append({"pet": pet, "form": form})
     data = {
-        "pets": pets,
+        "items": items,
+        "pet_count": pet_count
     }
     return render(request, 'crud_app/pages/home.html', data)
 
@@ -43,3 +49,23 @@ def pet(request, pk):
         "pet": pet
     }
     return render(request, 'crud_app/pages/pet.html', data)
+
+
+def wishlist(request):
+    items = Wishlist.objects.filter(user=request.user).order_by('id')
+    wishlist = []
+    pet_count = 0
+    for item in items:
+        pet_count = pet_count + 1
+        form = WishlistForm({"user": item.user.id, "pet": item.pet.id})
+        wishlist.append({"item":item, "form": form})
+
+    data = {"wishlist": wishlist,  "pet_count": pet_count}
+    return render(request, 'crud_app/pages/wishlist.html', data)
+
+
+def add_wishlist(request):
+    form = WishlistForm(request.POST)
+    if( form.is_valid() ):
+        form.save()
+        return redirect("/wishlist")

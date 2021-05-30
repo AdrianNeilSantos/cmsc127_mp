@@ -1,5 +1,8 @@
-from django.forms import ModelForm
-from .models import *
+from django.forms import ModelForm, TextInput, PasswordInput, CharField, HiddenInput, NumberInput
+from django.contrib.auth.forms import UserCreationForm
+
+from django.contrib.auth.models import User 
+from .models import * 
 
 class PetForm(ModelForm):
     class Meta:
@@ -10,3 +13,12 @@ class PetForm(ModelForm):
         #     "name": "Ilagay ang Pangalan",
         #     "student_number": "Ilagay ang Student number"
         # }
+
+class WishlistForm(ModelForm):
+    class Meta:
+        model = Wishlist
+        fields = "__all__"
+        widgets = {
+            'user':  HiddenInput( attrs = {'type':'hidden'} ),
+            'pet':  HiddenInput( attrs = {'type':'hidden'} ),
+        }

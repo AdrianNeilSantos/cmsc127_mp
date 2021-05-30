@@ -10,4 +10,5 @@ urlpatterns = [
     path('cart/', views.cart, name="cart"),
     path('addPet/', views.addPet, name="addPet"),
     path('pet/<str:pk>', views.pet, name="pet"),
+    path('add-wishlist/', views.add_wishlist, name="add_wishlist"),
 ]
