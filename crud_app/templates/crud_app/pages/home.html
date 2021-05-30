@@ -1,7 +1,6 @@
 {% extends 'crud_app/main.html' %}
 
 {% block content %}
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 <div class="w3-main" style="margin-left:200px">
     <!-- Page Title + Button -->
@@ -10,17 +9,52 @@
       <div class="w3-container">
         <h1>Homepage</h1>
       </div>
+    </div>   
+</div>
+
+<br><br>
+<!-- Header -->
+<section class="text-center container">
+  <div class="row py-lg-5">
+    <div class="col-lg-8 mx-auto">
+      <h1>Pet List</h1>
+      <p class="lead text-muted">Enter description here</p>
+      <a href="" class="btn btn-outline-success">
+        <i class="fas fa-plus"></i>
+        Add Pet
+      </a>
     </div>
-    
-    <!-- Page Content -->
-    <div class="w3-container">
-      <h3>Responsive Sidebar</h3>
-      <p>The sidebar in this example will always be displayed on screens wider than 992px, and hidden on tablets or mobile phones (screens less than 993px wide).</p>
-      <p>On tablets and mobile phones the sidebar is replaced with a menu icon to open the sidebar.</p>
-      <p>The sidebar will overlay of the page content.</p>
-      <p><b>Resize the browser window to see how it works.</b></p>
+  </div>
+</section>
+
+<!-- Page Content -->
+<div class="album py-5 bg-light">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      {% for pet in pets %}
+      <div class="col">
+
+        <!-- for image -->
+        <div class="card shadow">
+          <svg class="bd-placeholder-img card-img-top" width="100%" height="350" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="40%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+        </div>
+
+        <!-- for details -->
+        <div class="card-body">
+          <h5 class="card-title"> {{pet.name}}</h5>
+          <p class="card-text">Age: {{pet.age}}</p>
+          <p class="card-text">Sex: {{pet.sex}}</p>
+        <!--  -->
+          <a href="{% url 'pet' pet.id %}" class="btn btn-outline-dark"><i class="fas fa-eye"></i> Read More</a>
+          <a href="" type="button" class="btn btn-outline-dark"> 
+            <i class="fas fa-heart"></i> Add to Wishlist
+          </a>
+        </div>
+      </div>
+
+      {% endfor %}
     </div>
-       
+  </div>
 </div>
 
 

@@ -1,0 +1,31 @@
+{% extends 'crud_app/main.html' %}
+
+{% block content %}
+
+
+
+<!-- Book Details Page -->
+<div class="container">
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="card text-center shadow">
+				<div class="card-header">
+                    Featured Pet
+                </div>
+				<div class="card-body">
+                    <h5 class="card-title">{{pet.name}}</h5>
+                    <!-- Filler pic for now -->
+                    <svg class="bd-placeholder-img card-img-top" width="100%" height="600" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="45%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+                    <p class="card-text">
+                        <strong>Age: </strong>
+                        {{pet.age}}
+                        <strong>Sex: </strong>
+                        {{pet.sex}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
