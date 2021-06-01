@@ -29,10 +29,11 @@ def home(request):
     return render(request, 'crud_app/pages/home.html', data)
 
 
-
+@login_required(login_url='/login')
 def cart(request):
     return render(request, 'crud_app/pages/cart.html')
 
+@login_required(login_url='/login')
 def addPet(request):
     form = PetForm()
     data = {"form": form}
@@ -46,6 +47,7 @@ def addPet(request):
 
     return render(request, 'crud_app/pages/addPet.html', data)
 
+
 def pet(request, pk):
     pet = Pet.objects.get(id=pk)
     data = {
@@ -54,6 +56,7 @@ def pet(request, pk):
     return render(request, 'crud_app/pages/pet.html', data)
 
 
+@login_required(login_url='/login')
 def wishlist(request):
     items = Wishlist.objects.filter(user=request.user).order_by('id')
     wishlist = []
@@ -66,7 +69,7 @@ def wishlist(request):
     data = {"wishlist": wishlist,  "pet_count": pet_count}
     return render(request, 'crud_app/pages/wishlist.html', data)
 
-    
+@login_required(login_url='/login')
 def addWishlist(request):
     form = WishlistForm()
     data = {"form": form}
@@ -80,11 +83,15 @@ def addWishlist(request):
 
     return render(request, 'crud_app/pages/addWishlist.html', data)
 
+
+@login_required(login_url='/login')
 def deletePet(request, pk):
     pet = Pet.objects.get(id=pk)
     pet.delete()
     return redirect("/")
 
+
+@login_required(login_url='/login')
 def deleteWishlist(request, pk):
     wishlist = Wishlist.objects.get(id=pk)
     wishlist.delete()
