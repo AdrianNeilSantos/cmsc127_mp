@@ -10,6 +10,7 @@ class Pet(models.Model):
     sex = models.CharField(max_length=10, null=True)
     picture = models.ImageField(null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
+    # insert owner
 
     def __str__(self):
         return self.name

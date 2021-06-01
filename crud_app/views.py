@@ -24,8 +24,6 @@ def signIn(request):
 def signUp(request):
     return render(request, 'crud_app/pages/signUp.html')
 
-def wishlist(request):
-    return render(request, 'crud_app/pages/wishlist.html')
 
 def cart(request):
     return render(request, 'crud_app/pages/cart.html')
@@ -63,9 +61,26 @@ def wishlist(request):
     data = {"wishlist": wishlist,  "pet_count": pet_count}
     return render(request, 'crud_app/pages/wishlist.html', data)
 
+    
+def addWishlist(request):
+    form = WishlistForm()
+    data = {"form": form}
 
-def add_wishlist(request):
-    form = WishlistForm(request.POST)
-    if( form.is_valid() ):
-        form.save()
-        return redirect("/wishlist")
+    if(request.method == 'POST'):
+        form = WishlistForm(request.POST)
+        if(form.is_valid):
+            form.save()
+            # redirect to home
+            return redirect("/wishlist/")
+
+    return render(request, 'crud_app/pages/addWishlist.html', data)
+
+def deletePet(request, pk):
+    pet = Pet.objects.get(id=pk)
+    pet.delete()
+    return redirect("/")
+
+def deleteWishlist(request, pk):
+    wishlist = Wishlist.objects.get(id=pk)
+    wishlist.delete()
+    return redirect("/wishlist")

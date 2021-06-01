@@ -10,5 +10,7 @@ urlpatterns = [
     path('cart/', views.cart, name="cart"),
     path('addPet/', views.addPet, name="addPet"),
     path('pet/<str:pk>', views.pet, name="pet"),
-    path('add-wishlist/', views.add_wishlist, name="add_wishlist"),
+    path('addWishlist/', views.addWishlist, name="addWishlist"),
+    path('deletePet/<str:pk>', views.deletePet, name="deletePet"),
+    path('deleteWishlist/<str:pk>', views.deleteWishlist, name="deleteWishlist"),
 ]

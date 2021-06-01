@@ -18,7 +18,7 @@ class WishlistForm(ModelForm):
     class Meta:
         model = Wishlist
         fields = "__all__"
-        widgets = {
-            'user':  HiddenInput( attrs = {'type':'hidden'} ),
-            'pet':  HiddenInput( attrs = {'type':'hidden'} ),
-        }
+        # widgets = {
+        #     'user':  HiddenInput( attrs = {'type':'hidden'} ),
+        #     'pet':  HiddenInput( attrs = {'type':'hidden'} ),
+        # }

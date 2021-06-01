@@ -20,7 +20,7 @@
       <h1>Your Wishlist</h1>
       <p class="lead text-muted">Enter description here</p>
       <p class="lead text-muted">Total pets in wishlist:{{pet_count}}</p>
-      <a href="" class="btn btn-outline-success">
+      <a href="{% url 'addWishlist' %}" class="btn btn-outline-success">
         <i class="fas fa-plus"></i>
         Add Pet to Wishlist
       </a>
@@ -49,11 +49,40 @@
           <h5 class="card-title"> {{w.item.pet.name}}</h5>
           <p class="card-text">Age: {{w.item.pet.age}}</p>
           <p class="card-text">Sex: {{w.item.pet.sex}}</p>
-        <!--  -->
+        <!-- Read More  -->
           <a href="{% url 'pet' w.item.pet.id %}" class="btn btn-outline-dark"><i class="fas fa-eye"></i> Read More</a>
-          <a href="" type="button" class="btn btn-outline-dark"> 
-            <i class="fas fa-trash"></i> Remove to wishlist
-          </a>
+          
+          <!-- Delete Pet to wishlist -->
+          <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete_wishlist_{{w.item.id}}">
+            <i class="fas fa-trash"></i>
+            Delete Pet to wishlst
+         </button>
+
+
+         
+        <!-- Delete Pet Modal -->
+        <div class="modal fade" id="delete_wishlist_{{w.item.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Delete Pet Confirmation</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      Are you sure you want to delete {{w.item.pet.name}} by?
+                  </div>
+                  <div class="modal-footer">
+                      <a href="{% url 'deleteWishlist' w.item.id %}" class="btn btn-outline-success">
+                          <i class="fas fa-trash"></i> Delete
+                      </a>
+                      <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
+                          <i class="fas fa-ban"></i> Cancel
+                      </button>
+                  </div>
+              </div>
+          </div>
+      </div>
+
         </div>
       </div>
 

@@ -55,40 +55,68 @@
             <i class="fas fa-cart-plus"></i> Add to Wishlist
         </button>
         <!-- Add to wishlist confirmation modal -->
-        
-                            <!-- Book Confirmation Modal -->
-                            <div class="modal fade" id="add_{{item.pet.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                              <div class="modal-dialog modal-dialog-centered">
-                              <div class="modal-content">
-                                  <form action="{% url 'add_wishlist' %}" method="post">
-                                      <div class="modal-header">
-                                          <h5 class="modal-title" id="exampleModalLabel">Pet Confirmation</h5>
-                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                      </div>
-                                      <div class="modal-body text-start">
-                                          Hello, {{request.user}}! Are you sure you want to add <strong>{{pet.name}}</strong> in your wishlist?
-                                          {% csrf_token %}
-                                          {{item.form.user}}
-                                          {{item.form.pet}}
 
-                                      </div>
-                                      <div class="modal-footer">
-                                          <button type="submit" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal"> 
-                                              <i class="fas fa-cart-plus"></i> 
-                                              Add to wishlist
-                                          </button>
-                                  
-                                          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
-                                              <i class="fas fa-ban"></i> 
-                                              Cancel
-                                          </button>
-                                      </div>
-                                  </form>
-                              </div>
-                              </div>
-                          </div>
+              <!-- Book Confirmation Modal -->
+              <div class="modal fade" id="add_{{item.pet.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form action="{% url 'addWishlist' %}" method="post">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Pet Confirmation</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-start">
+                            Hello, {{request.user}}! Are you sure you want to add <strong>{{pet.name}}</strong> in your wishlist?
+                            {% csrf_token %}
+                            {{item.form.user}}
+                            {{item.form.pet}}
 
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal"> 
+                                <i class="fas fa-cart-plus"></i> 
+                                Add to wishlist
+                            </button>
+                    
+                            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
+                                <i class="fas fa-ban"></i> 
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                </div>
+            </div>
 
+            <!-- Delete -->
+            
+            <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete_pet_{{item.pet.id}}">
+              <i class="fas fa-trash"></i>
+              Delete Pet
+          </button>
+          
+        <!-- Delete Pet Modal -->
+        <div class="modal fade" id="delete_pet_{{item.pet.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Delete Pet Confirmation</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete {{item.pet.name}} by?
+                    </div>
+                    <div class="modal-footer">
+                        <a href="{% url 'deletePet' item.pet.id %}" class="btn btn-outline-success">
+                            <i class="fas fa-trash"></i> Delete
+                        </a>
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
+                            <i class="fas fa-ban"></i> Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
         </div>

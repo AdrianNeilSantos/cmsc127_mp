@@ -1,0 +1,37 @@
+{% extends 'crud_app/main.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<div class="container">
+    <h1>Add a Pet to wishlist</h1>
+    <br>
+
+    <div class="card">
+        <div class="card-header">
+            Pet addition form
+        </div>
+        
+        <div class="card-body">
+            <form action="" method="post">
+
+                {% csrf_token %}
+                {{form|crispy}}
+
+                <button type="submit" class="btn btn-outline-success">
+                    <i class="fas fa-plus"></i>
+                    Add Pet to wishlist
+                </button>
+
+                <a href="" class="btn btn-outline-danger">
+                    <i class="fas fa-ban"></i>
+                    Cancel
+                </a>
+            </form>
+        </div>
+      </div>
+
+
+</div>
+
+{% endblock content %}
