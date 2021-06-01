@@ -1,4 +1,14 @@
+import math
+
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.core.mail import send_mail, EmailMessage
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.conf import settings
+from django.contrib.auth.forms import UserCreationForm
+
 from .models import *
 from .forms import *
 
@@ -18,11 +28,6 @@ def home(request):
     }
     return render(request, 'crud_app/pages/home.html', data)
 
-def signIn(request):
-    return render(request, 'crud_app/pages/signIn.html')
-
-def signUp(request):
-    return render(request, 'crud_app/pages/signUp.html')
 
 
 def cart(request):
@@ -84,3 +89,40 @@ def deleteWishlist(request, pk):
     wishlist = Wishlist.objects.get(id=pk)
     wishlist.delete()
     return redirect("/wishlist")
+
+def register(request):
+    form = UserForm()
+
+    if(request.method == "POST"):
+        form = UserForm(request.POST)
+        if(form.is_valid()):
+            form.save()
+            messages.success(request, "Account was created for "+form.cleaned_data.get("username"))
+            return redirect('/login')
+
+    data = {"form": form}
+    return render(request, 'crud_app/pages/register.html', data)
+
+
+def login_page(request):
+    if( request.method == "POST"):
+        username = request.POST.get('username','')
+        password = request.POST.get('password','')
+
+        user = authenticate(request, username=username, password=password)
+    
+        if user is not None:
+            login(request, user)
+            print("Login Success.")
+            return redirect('/')
+        else:
+            print("Login Fail.")
+            messages.error(request, "Incorrect password or username.")
+    
+    return render(request, 'crud_app/pages/login.html')
+
+
+
+def logout_page(request):
+    logout(request)
+    return redirect('/login/')

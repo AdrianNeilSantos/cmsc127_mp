@@ -11,7 +11,7 @@
     <div class="w3-teal">
       <button class="w3-button w3-teal w3-xlarge w3-hide-large" onclick="w3_open()">&#9776;</button>
       <div class="w3-container">
-        <h1>Sign Up</h1>
+        <h1>Log In</h1>
       </div>
     </div>
     
@@ -26,46 +26,51 @@
             <img src={% static '/media/bg.svg' %}>
         </div>
         <div class="login-content">
-            <form action="index.html">
+            <form action="" method="post">
+            {% csrf_token %}
             {% load static%}
             <img src={% static '/media/avatar.svg' %}>
-            <h2 class="title text">Welcome</h2>
+            <h2 class="title text">Login Page</h2>
                     <div class="input-div one">
                         <div class="i">
                             <i class="fas fa-user"></i>
                         </div>
                         <div class="div">
                             <h5 class="text">Username</h5>
-                            <input type="text" class="input">
+                            <input type="text" class="input" name="username">
                         </div>
                     </div>
-
-                    <div class="input-div one">
-                        <div class="i">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="div">
-                            <h5 class="text">Email</h5>
-                            <input class="text" type="text" class="input">
-                        </div>
-                     </div>
-
                     <div class="input-div pass">
                         <div class="i"> 
                         <i class="fas fa-lock"></i>
                         </div>
                         <div class="div">
                         <h5 class="text">Password</h5>
-                        <input type="password" class="input">
+                        <input type="password" class="input" name="password">
                     </div>
                     </div>
                     <a class="sign text" href="#">Forgot Password?</a>
                     <br>
+                    {% for message in messages %}
+                    {% if 'success' == message.tags %}
+                        <!-- Alert Box -->
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>Success!</strong> {{message | striptags}}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% else %}
+                        <!-- Alert Box -->
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Error!</strong> {{message | striptags}}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endif %}
+                    {% endfor %}
 
-                    <p class="text">By signing up, you agree to the company's nonexistent terms and conditions</p>
                     <br>
-                    <p class="text">Have an account? <a href="{% url 'signIn' %}"> Sign In</a></p>
-                    <input type="submit" class="btn" value="Sign up">
+                    <p class="text">Don't have an account?</p>
+                    <a class="sign text" href="{% url 'register' %}">Sign Up</a>
+                    <input type="submit" class="btn" value="Sign In">
                 </form>
             </div>
         </div>

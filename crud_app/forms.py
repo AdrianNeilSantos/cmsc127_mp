@@ -22,3 +22,17 @@ class WishlistForm(ModelForm):
         #     'user':  HiddenInput( attrs = {'type':'hidden'} ),
         #     'pet':  HiddenInput( attrs = {'type':'hidden'} ),
         # }
+
+
+class UserForm(UserCreationForm):
+    attrs = { 'class': 'input', 'type':'password'} 
+    password1 =  CharField( widget=PasswordInput(attrs=attrs) )
+    password2 =  CharField( widget=PasswordInput(attrs=attrs) )
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+        widgets = { 
+            'username': TextInput( attrs={ 'class': 'input'} ),
+            'email': TextInput( attrs={ 'class': 'input', 'type':'email'} ),
+        }

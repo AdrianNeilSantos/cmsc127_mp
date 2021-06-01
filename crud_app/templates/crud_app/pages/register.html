@@ -11,7 +11,7 @@
     <div class="w3-teal">
       <button class="w3-button w3-teal w3-xlarge w3-hide-large" onclick="w3_open()">&#9776;</button>
       <div class="w3-container">
-        <h1>Sign In</h1>
+        <h1>Register</h1>
       </div>
     </div>
     
@@ -26,34 +26,75 @@
             <img src={% static '/media/bg.svg' %}>
         </div>
         <div class="login-content">
-            <form action="index.html">
+            <!-- Form starts here -->
+            <form action="" method="post">
+            {% csrf_token %}
             {% load static%}
             <img src={% static '/media/avatar.svg' %}>
-            <h2 class="title text">Welcome</h2>
+            <h2 class="title text">Register Page</h2>
+
                     <div class="input-div one">
                         <div class="i">
                             <i class="fas fa-user"></i>
                         </div>
                         <div class="div">
                             <h5 class="text">Username</h5>
-                            <input type="text" class="input">
+                            {{form.username}}
                         </div>
                     </div>
+
+                    <div class="input-div one">
+                        <div class="i">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="div">
+                            <h5 class="text">Email</h5>
+                            {{form.email}}
+                        </div>
+                     </div>
+
                     <div class="input-div pass">
                         <div class="i"> 
                         <i class="fas fa-lock"></i>
                         </div>
                         <div class="div">
                         <h5 class="text">Password</h5>
-                        <input type="password" class="input">
+                        {{form.password1}}
+                        </div>
                     </div>
+
+                    <div class="input-div pass">
+                        <div class="i"> 
+                        <i class="fas fa-lock"></i>
+                        </div>
+                        <div class="div">
+                        <h5 class="text">Re enter password</h5>
+                        {{form.password2}}
+                        </div>
                     </div>
+
+
+
                     <a class="sign text" href="#">Forgot Password?</a>
                     <br>
 
-                    <p class="text">Don't have an account?</p>
-                    <a class="sign text" href="{% url 'signUp' %}">Sign Up</a>
-                    <input type="submit" class="btn" value="Sign In">
+                    <p class="text">By signing up, you agree to the company's nonexistent terms and conditions</p>
+                    <br>
+
+                    <p class="text">Have an account? <a href="{% url 'login_page' %}"> Log In</a></p>
+
+                    {% if form.errors %}
+                    {% for key, value in form.errors.items %}
+                    <!-- Alert -->
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Error!</strong> {{value | striptags}}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
+                    <br>
+                    <button type="submit" class="btn">Sign up</button>
                 </form>
             </div>
         </div>
