@@ -76,7 +76,7 @@ def addWishlist(request):
 
     if(request.method == 'POST'):
         form = WishlistForm(request.POST)
-        if(form.is_valid):
+        if(form.is_valid()):
             form.save()
             # redirect to home
             return redirect("/wishlist/")
