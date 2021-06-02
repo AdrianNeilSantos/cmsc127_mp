@@ -68,7 +68,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body text-start">
-                            Hello, {{request.user}}! Are you sure you want to add <strong>{{pet.name}}</strong> in your wishlist?
+                            Hello, {{request.user}}! Are you sure you want to add <strong>{{item.pet.name}}</strong> in your wishlist?
                             {% csrf_token %}
                             {{item.form.user}}
                             {{item.form.pet}}
