@@ -9,10 +9,11 @@ class PetForm(ModelForm):
         model = Pet
         fields = "__all__"
         # fields = ["name", "student_number"]
-        # labels = {
-        #     "name": "Ilagay ang Pangalan",
-        #     "student_number": "Ilagay ang Student number"
-        # }
+        labels = {
+            'owner':  HiddenInput( attrs = {'type':'hidden'} ),
+        }
+
+
 
 class WishlistForm(ModelForm):
     class Meta:
