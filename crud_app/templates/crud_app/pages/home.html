@@ -56,6 +56,9 @@
           <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#add_{{item.pet.id}}">  
             <i class="fas fa-cart-plus"></i> Add to Wishlist
         </button>
+        <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#add_cart{{item.pet.id}}">  
+          <i class="fas fa-cart-plus"></i> Add to Cart
+        </button>
         <!-- Add to wishlist confirmation modal -->
 
               <!-- Book Confirmation Modal -->
@@ -89,6 +92,45 @@
                 </div>
                 </div>
             </div>
+
+            
+              <!-- Add Pet to Cart Confirmation Modal -->
+              <div class="modal fade" id="add_cart{{item.pet.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form action="{% url 'addCart' %}" method="post">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Pet Confirmation</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-start">
+                            Hello, {{request.user}}! Are you sure you want to add <strong>{{item.pet.name}}</strong> in your cart?
+                        </div>
+                          {% csrf_token %}
+                          {{item.form.user}}
+                          {{item.form.pet}}
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal"> 
+                                <i class="fas fa-cart-plus"></i> 
+                                Add to Cart
+                            </button>
+
+                            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
+                                <i class="fas fa-ban"></i> 
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                </div>
+            </div>
+
+
+
+
+
+
 
             <!-- Delete -->
             

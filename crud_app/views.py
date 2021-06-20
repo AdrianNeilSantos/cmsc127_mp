@@ -29,9 +29,6 @@ def home(request):
     return render(request, 'crud_app/pages/home.html', data)
 
 
-@login_required(login_url='/login')
-def cart(request):
-    return render(request, 'crud_app/pages/cart.html')
 
 @login_required(login_url='/login')
 def addPet(request):
@@ -69,6 +66,82 @@ def wishlist(request):
     data = {"wishlist": wishlist,  "pet_count": pet_count}
     return render(request, 'crud_app/pages/wishlist.html', data)
 
+
+@login_required(login_url='/login')
+def cart(request):
+    items = Cart.objects.filter(user=request.user).order_by('id')
+    cart = []
+    pet_count = 0
+    for item in items:
+        pet_count = pet_count + 1
+        form = CartForm({"user": item.user.id, "pet": item.pet.id})
+        cart.append({"item":item, "form": form})
+
+    data = {"cart": cart,  "pet_count": pet_count}
+    return render(request, 'crud_app/pages/cart.html', data)
+
+
+
+@login_required(login_url='/login')
+def requestPet(request):
+    items = Cart.objects.filter(user=request.user)
+    #Implement code that will transfer pet to requests 
+
+    for item in items:
+        adoptee = AdopteeRequest(user = request.user, pet=item.pet, date_created=item.date_created)
+        adopter = AdopterRequest(user = item.pet.owner, pet=item.pet, date_created=item.date_created)
+
+        adoptee.save()
+        adopter.save()
+
+
+    Cart.objects.filter(user=request.user).delete()
+    return redirect("/requests")
+
+
+
+@login_required(login_url='/login')
+def profile(request):
+    items = OwnedPet.objects.filter(user=request.user).order_by('id')
+    ownedPet = []
+    pet_count = 0
+    for item in items:
+        pet_count += 1
+        form = OwnedPetForm({"user": item.user.id, "pet": item.pet.id})
+        ownedPet.append({"item":item, "form": form})
+
+    data = {"ownedPet": ownedPet,  "pet_count": pet_count, "user": request.user}
+
+    return render(request, 'crud_app/pages/profile.html', data)
+
+
+@login_required(login_url='/login')
+def requests(request):
+    adopterItems = AdopterRequest.objects.filter(user=request.user).order_by('id')
+    adopteeItems = AdopteeRequest.objects.filter(user=request.user).order_by('id')
+    adopterRequest = []
+    adopteeRequest = []
+
+    adopter_count = 0
+    adoptee_count = 0
+
+    for item in adopterItems:
+        adopter_count += 1
+        form = AdopterRequestForm({"user": item.user.id, "pet": item.pet.id})
+        adopterRequest.append({"item":item, "form": form})
+
+    for item in adopteeItems:
+        adoptee_count += 1
+        form = AdopteeRequestForm({"user": item.user.id, "pet": item.pet.id})
+        adopteeRequest.append({"item":item, "form": form})
+
+    data = {"adopterRequest": adopterRequest, "adopteeRequest": adopteeRequest,
+              "adopter_count": adopter_count, "adoptee_count": adoptee_count, "user": request.user}
+
+    return render(request, 'crud_app/pages/requests.html', data)
+
+
+
 @login_required(login_url='/login')
 def addWishlist(request):
     form = WishlistForm()
@@ -77,11 +150,33 @@ def addWishlist(request):
     if(request.method == 'POST'):
         form = WishlistForm(request.POST)
         if(form.is_valid()):
-            form.save()
+            cleaned_info = form.cleaned_data
+            num_results = Wishlist.objects.filter(user=request.user, pet=cleaned_info['pet']).count()
+            if(num_results == 0):
+                form.save()
             # redirect to home
             return redirect("/wishlist/")
 
     return render(request, 'crud_app/pages/addWishlist.html', data)
+
+@login_required(login_url='/login')
+def addCart(request):
+    form = CartForm()
+    data = {"form": form}
+
+    if(request.method == 'POST'):
+        form = CartForm(request.POST)
+        if(form.is_valid()):
+            cleaned_info = form.cleaned_data
+            num_results = Cart.objects.filter(user=request.user, pet=cleaned_info['pet']).count()
+            if(num_results == 0):
+                form.save()
+            # redirect to home
+            return redirect("/cart/")
+
+    return render(request, 'crud_app/pages/addCart.html', data)
+
+
 
 
 @login_required(login_url='/login')
@@ -96,6 +191,13 @@ def deleteWishlist(request, pk):
     wishlist = Wishlist.objects.get(id=pk)
     wishlist.delete()
     return redirect("/wishlist")
+
+@login_required(login_url='/login')
+def deleteCart(request, pk):
+    cart = Cart.objects.get(id=pk)
+    cart.delete()
+    return redirect("/cart")
+
 
 def register(request):
     form = UserForm()

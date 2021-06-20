@@ -1,8 +1,31 @@
 from django.forms import ModelForm, TextInput, PasswordInput, CharField, HiddenInput, NumberInput
 from django.contrib.auth.forms import UserCreationForm
 
+from django.forms import ModelForm, TextInput, PasswordInput, CharField, HiddenInput, NumberInput
+from django.contrib.auth.forms import UserCreationForm
+
 from django.contrib.auth.models import User 
 from .models import * 
+from django import forms
+
+
+SEX_CHOICES = [
+    ('male', 'Male'),
+    ('female', 'Female'),
+
+]
+
+PET_TYPE = [
+    ('cat', 'Cat'),
+    {'dog', 'Dog'},
+    ('bird', 'Bird'),
+    ('rabbit', 'Rabbit'),
+    ('fish', 'Fish'),
+    ('others', 'Ohers')
+]
+
+
+
 
 class PetForm(ModelForm):
     class Meta:
@@ -12,7 +35,10 @@ class PetForm(ModelForm):
         labels = {
             'owner':  HiddenInput( attrs = {'type':'hidden'} ),
         }
-
+        widgets = {
+            'sex' : forms.Select(choices=SEX_CHOICES),
+            'petType': forms.Select(choices=PET_TYPE)
+        }
 
 
 class WishlistForm(ModelForm):
@@ -23,6 +49,47 @@ class WishlistForm(ModelForm):
             'user':  HiddenInput( attrs = {'type':'hidden'} ),
             'pet':  HiddenInput( attrs = {'type':'hidden'} ),
         }
+
+
+class CartForm(ModelForm):
+    class Meta:
+        model = Cart
+        fields = "__all__"
+        widgets = {
+            'user':  HiddenInput( attrs = {'type':'hidden'} ),
+            'pet':  HiddenInput( attrs = {'type':'hidden'} ),
+        }
+
+
+class OwnedPetForm(ModelForm):
+    class Meta:
+        model = OwnedPet
+        fields = "__all__"
+        widgets = {
+            'user':  HiddenInput( attrs = {'type':'hidden'} ),
+            'pet':  HiddenInput( attrs = {'type':'hidden'} ),
+        }
+
+
+class AdopterRequestForm(ModelForm):
+    class Meta:
+        model = AdopterRequest
+        fields = "__all__"
+        widgets = {
+            'user':  HiddenInput( attrs = {'type':'hidden'} ),
+            'pet':  HiddenInput( attrs = {'type':'hidden'} ),
+        }
+
+
+class AdopteeRequestForm(ModelForm):
+    class Meta:
+        model = AdopteeRequest
+        fields = "__all__"
+        widgets = {
+            'user':  HiddenInput( attrs = {'type':'hidden'} ),
+            'pet':  HiddenInput( attrs = {'type':'hidden'} ),
+        }
+
 
 
 class UserForm(UserCreationForm):

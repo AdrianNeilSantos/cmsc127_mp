@@ -9,6 +9,8 @@
     {% if request.user.is_authenticated %}
     <a href="{% url 'wishlist' %}" class="w3-bar-item w3-button">Wishlist</a>
     <a href="{% url 'cart' %}" class="w3-bar-item w3-button">Cart</a>
+    <a href="{% url 'requests' %}" class="w3-bar-item w3-button">Requests</a>
+    <a href="{% url 'profile' %}" class="w3-bar-item w3-button">Profile</a>
     <a href="{% url 'logout_page' %}" class="w3-bar-item w3-button">Log out</a>
     {% else %}
     <a href="{% url 'login_page' %}" class="w3-bar-item w3-button">Log In</a>
